@@ -12,12 +12,17 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { signUpAsync } from '../features/auth/authSlice';
+import { useHistory } from 'react-router-dom';
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSubmit = (data) => {
     dispatch(signUpAsync(data));
+  };
+  const handleOnClickLogIn = () => {
+    history.push('/login');
   };
 
   return (
@@ -97,7 +102,7 @@ export default function SignUp() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" onClick={handleOnClickLogIn}>
                     Already have an account? Sign in
                   </Link>
                 </Grid>

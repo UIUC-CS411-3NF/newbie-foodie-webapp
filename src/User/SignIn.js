@@ -12,14 +12,19 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { signInAsync } from '../features/auth/authSlice';
+import { useHistory } from 'react-router-dom';
 
 export default function SignIn() {
   const auth = useSelector((state) => state.auth);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSubmit = (data) => {
     console.log(data);
     dispatch(signInAsync(data));
+  };
+  const handleOnClickSignUp = () => {
+    history.push('/signup');
   };
 
   return (
@@ -92,7 +97,7 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" onClick={handleOnClickSignUp}>
                     Don't have an account? Sign Up
                   </Link>
                 </Grid>
