@@ -5,7 +5,6 @@ import SignIn from '../User/SignIn';
 import SignUp from '../User/SignUp';
 import Homepage from '../Homepage/Homepage';
 import Profile from '../User/Profile';
-import CreateRecipe from '../Recipe/CreateRecipe';
 
 const Main = () => {
   const auth = useSelector((state) => state.auth);
@@ -13,10 +12,7 @@ const Main = () => {
   if (auth.login) {
     routes = (
       <Switch>
-        <Route path="/recipe/create" exact>
-          <CreateRecipe />
-        </Route>
-        <Route path="/profile" exact>
+        <Route path="/profile">
           <Profile />
         </Route>
         <Route path="/" exact>
