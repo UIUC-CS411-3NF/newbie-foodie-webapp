@@ -49,23 +49,23 @@ export const recipeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createRecipeAsync.pending, (state) => {
-        state.status = apiStaus.pending;
+        state.status = apiStatus.pending;
       })
       .addCase(createRecipeAsync.fulfilled, (state) => {
-        state.status = apiStaus.idle;
+        state.status = apiStatus.idle;
       })
       .addCase(createRecipeAsync.rejected, (state) => {
-        state.status = apiStaus.failed;
+        state.status = apiStatus.failed;
       })
       .addCase(getUserRecipesAsync.pending, (state) => {
-        state.status = apiStaus.pending;
+        state.status = apiStatus.pending;
       })
       .addCase(getUserRecipesAsync.fulfilled, (state, action) => {
-        state.status = apiStaus.idle;
+        state.status = apiStatus.idle;
         state.recipes = action.payload;
       })
       .addCase(getUserRecipesAsync.rejected, (state) => {
-        state.status = apiStaus.failed;
+        state.status = apiStatus.failed;
       });
   },
 });
