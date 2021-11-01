@@ -12,11 +12,7 @@ function Copyright() {
       <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>
-      <Box>
-        <Typography>
-          Conflict!!!!!
-        </Typography>
-      </Box>
+      <Box>Yes!</Box>
       {' '}
       {new Date().getFullYear()}
       .
