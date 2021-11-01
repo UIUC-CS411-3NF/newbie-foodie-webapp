@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   createRecipe,
+  getRecipeByAuthor,
 } from './recipeAPI';
-import apiStaus from '../apiStaus';
+import apiStatus from '../apiStatus';
 
 const initialState = {
   recipes: null,
-  status: 'success',
+  status: apiStatus.idle,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -22,9 +23,21 @@ export const createRecipeAsync = createAsyncThunk(
     try {
       response = await createRecipe(payload);
     } catch (err) {
-      console.log(err);
       throw thunkAPI.rejectWithValue();
     }
+  },
+);
+
+export const getUserRecipesAsync = createAsyncThunk(
+  'recipe',
+  async (thunkAPI) => {
+    let response;
+    try {
+      response = await getRecipeByAuthor();
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
   },
 );
 
@@ -42,6 +55,16 @@ export const recipeSlice = createSlice({
         state.status = apiStaus.idle;
       })
       .addCase(createRecipeAsync.rejected, (state) => {
+        state.status = apiStaus.failed;
+      })
+      .addCase(getUserRecipesAsync.pending, (state) => {
+        state.status = apiStaus.pending;
+      })
+      .addCase(getUserRecipesAsync.fulfilled, (state, action) => {
+        state.status = apiStaus.idle;
+        state.recipes = action.payload;
+      })
+      .addCase(getUserRecipesAsync.rejected, (state) => {
         state.status = apiStaus.failed;
       });
   },

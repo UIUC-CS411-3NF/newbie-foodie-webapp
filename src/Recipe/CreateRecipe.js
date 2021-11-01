@@ -1,27 +1,38 @@
 import {
+  Box,
   Button, Input, InputAdornment, TextField,
 } from '@mui/material';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createRecipeAsync } from '../features/recipe/recipeSlice';
 
 const CreateRecipe = () => {
+  const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    console.log(data);
-    // console.log(typeof(data.cooking_time));
     dispatch(createRecipeAsync(data));
   };
+  const handleBackClick = () => {
+    history.push('/profile/recipes');
+  };
+
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '18px',
+      }}
+    >
       <form
         style={{
-          width: '60%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          padding: 8,
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -52,12 +63,21 @@ const CreateRecipe = () => {
         <Button
           type="submit"
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mb: 2 }}
         >
           SAVE
         </Button>
       </form>
-    </div>
+
+      <Button
+        fullWidth
+        onClick={handleBackClick}
+        color="error"
+        variant="outlined"
+      >
+        Cancel
+      </Button>
+    </Box>
   );
 };
 
