@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import RecipeCard from '../Recipe/RecipeCard';
-import { getUserRecipesAsync } from '../features/recipe/recipeSlice';
+import { getUserRecipesAsync, resetStatus } from '../features/recipe/recipeSlice';
 
 const UserRecipes = () => {
   const history = useHistory();
@@ -12,11 +12,20 @@ const UserRecipes = () => {
     history.push('/profile/recipe/create');
   };
   const recipe = useSelector((state) => state.recipe);
-  console.log(recipe);
+  const auth = useSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(getUserRecipesAsync(auth.user_id));
+  }, [auth.user_id]);
 
   useEffect(() => {
-    dispatch(getUserRecipesAsync());
+    dispatch(resetStatus());
   }, []);
+
+  useEffect(() => {
+    if (recipe.isNeedToReSearch) {
+      dispatch(getUserRecipesAsync(auth.user_id));
+    }
+  }, [recipe.isNeedToReSearch]);
 
   const ShowAvatar = false;
   return (
@@ -32,8 +41,17 @@ const UserRecipes = () => {
           m: 1,
         }}
       >
-        <RecipeCard />
-        <RecipeCard />
+        {
+          recipe.recipes && recipe.recipes.map((item) => (
+            <RecipeCard
+              key={item.recipe_id}
+              allowedEdited
+              recipe={item}
+              showAvatar={false}
+              user_id={auth.user_id}
+            />
+          ))
+        }
       </Box>
       <Box
         sx={{

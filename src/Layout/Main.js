@@ -1,13 +1,19 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Backdrop, CircularProgress } from '@mui/material';
 import SignIn from '../User/SignIn';
 import SignUp from '../User/SignUp';
 import Homepage from '../Homepage/Homepage';
 import Profile from '../User/Profile';
+import { verifyAsync } from '../features/auth/authSlice';
 
 const Main = () => {
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(verifyAsync());
+  }, []);
   let routes;
   if (auth.login) {
     routes = (
@@ -21,7 +27,7 @@ const Main = () => {
         <Redirect to="/" />
       </Switch>
     );
-  } else {
+  } else if (auth.login === false) {
     routes = (
       <Switch>
         <Route path="/login" exact>
@@ -35,6 +41,15 @@ const Main = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
+    );
+  } else {
+    routes = (
+      <Backdrop
+        open
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     );
   }
 

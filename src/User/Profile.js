@@ -4,6 +4,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useHistory, Switch, Route } from 'react-router-dom';
 import CreateRecipe from '../Recipe/CreateRecipe';
+import EditRecipe from '../Recipe/EditRecipe';
 import UserRecipes from './UserRecipes';
 
 const Profile = () => {
@@ -18,7 +19,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(indexValue);
     switch (indexValue) {
       case 0:
         history.push('/profile');
@@ -76,6 +76,9 @@ const Profile = () => {
           <Switch>
             <Route path="/profile/recipe/create" exact>
               <CreateRecipe />
+            </Route>
+            <Route path="/profile/recipe/edit/:rid" exact>
+              <EditRecipe />
             </Route>
             <Route path="/profile/recipes" exact>
               <UserRecipes />
