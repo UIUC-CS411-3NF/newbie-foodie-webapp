@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { signUpAsync } from '../features/auth/authSlice';
 import { useHistory } from 'react-router-dom';
+import { signUpAsync } from '../features/auth/authSlice';
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();

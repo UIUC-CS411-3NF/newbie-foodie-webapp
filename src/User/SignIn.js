@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import LoginIcon from '@mui/icons-material/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { signInAsync } from '../features/auth/authSlice';
 import { useHistory } from 'react-router-dom';
+import { signInAsync } from '../features/auth/authSlice';
 
 export default function SignIn() {
   const auth = useSelector((state) => state.auth);
@@ -20,7 +20,6 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(signInAsync(data));
   };
   const handleOnClickSignUp = () => {

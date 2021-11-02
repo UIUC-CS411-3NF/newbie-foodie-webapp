@@ -1,25 +1,34 @@
 import {
-  Alert,
-  Backdrop,
   Box,
-  Button, CircularProgress, Input, InputAdornment, TextField, Typography,
+  Button,
+  Input,
+  InputAdornment,
+  TextField,
+  Typography,
+  Backdrop,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import apiStatus from '../features/apiStatus';
-import { createRecipeAsync } from '../features/recipe/recipeSlice';
+import { createRecipeAsync, editRecipeAsync } from '../features/recipe/recipeSlice';
 
-const CreateRecipe = () => {
+const EditRecipe = () => {
   const history = useHistory();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [failed, setFailed] = useState(false);
-  const status = useSelector((state) => state.recipe.status);
+  const { recipes, status } = useSelector((state) => state.recipe);
+  const {
+    register, handleSubmit, setValue, formState: { errors },
+  } = useForm();
+  const dispatch = useDispatch();
+  const { rid } = useParams();
   const onSubmit = (data) => {
-    dispatch(createRecipeAsync(data));
+    const payload = { ...data, recipe_id: rid };
+    dispatch(editRecipeAsync(payload));
   };
   const handleBackClick = () => {
     history.push('/profile/recipes');
@@ -37,6 +46,15 @@ const CreateRecipe = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (recipes) {
+      const recipe = recipes.find((recipe) => recipe.recipe_id == rid);
+      setValue('dish_name', recipe.dish_name);
+      setValue('description', recipe.description);
+      setValue('cooking_time', recipe.cooking_time);
+    }
+  }, [rid, recipes, setValue]);
+
   return (
     <Box
       sx={{
@@ -47,7 +65,7 @@ const CreateRecipe = () => {
       }}
     >
       <Typography variant="h6">
-        Create
+        Edit
       </Typography>
       <form
         style={{
@@ -95,6 +113,7 @@ const CreateRecipe = () => {
         onClick={handleBackClick}
         color="error"
         variant="outlined"
+        sx={{ mb: 2 }}
       >
         Cancel
       </Button>
@@ -109,4 +128,4 @@ const CreateRecipe = () => {
   );
 };
 
-export default CreateRecipe;
+export default EditRecipe;

@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-  signIn, signOut, signUp, testApi,
+  signIn, signOut, signUp, testApi, verify,
 } from './authAPI';
 
 const initialState = {
-  login: false,
+  login: null,
   status: 'idle',
   connect: false,
+  email: null,
+  user_id: null,
+  username: null,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -31,13 +34,11 @@ export const signUpAsync = createAsyncThunk(
   'auth/signUp',
   async (payload, thunkAPI) => {
     let response;
-    console.log(payload);
     try {
       response = await signUp(payload);
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
-    console.log(response.data);
     return response.data;
   },
 );
@@ -54,6 +55,19 @@ export const signOutAsync = createAsyncThunk(
   },
 );
 
+export const verifyAsync = createAsyncThunk(
+  'auth/verify',
+  async (thunkAPI) => {
+    let response;
+    try {
+      response = await verify();
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
 // For testing
 export const testApiAsync = createAsyncThunk(
   '/',
@@ -61,9 +75,7 @@ export const testApiAsync = createAsyncThunk(
     let response;
     try {
       response = await testApi();
-      console.log(response.data);
     } catch (err) {
-      console.log(err);
       thunkAPI.rejectWithValue(0);
     }
   },
@@ -112,6 +124,21 @@ export const authSlice = createSlice({
       })
       .addCase(signOutAsync.rejected, (state, action) => {
         state.status = 'error';
+      })
+      .addCase(verifyAsync.pending, (state) => {
+        state.status = 'loading';
+        state.login = null;
+      })
+      .addCase(verifyAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.login = true;
+        state.username = action.payload.data.username;
+        state.email = action.payload.data.email;
+        state.user_id = action.payload.data.user_id;
+      })
+      .addCase(verifyAsync.rejected, (state) => {
+        state.status = 'error';
+        state.login = false;
       });
   },
 });
