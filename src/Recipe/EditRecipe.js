@@ -100,7 +100,6 @@ const EditRecipe = () => {
           {...register('cooking_time')}
         />
         <Input
-          key={value}
           required
           label="Ingredient"
           type="number"
