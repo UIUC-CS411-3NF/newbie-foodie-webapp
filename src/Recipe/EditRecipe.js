@@ -27,8 +27,9 @@ const EditRecipe = () => {
   const dispatch = useDispatch();
   const { rid } = useParams();
   const onSubmit = (data) => {
-    const payload = { ...data, recipe_id: rid };
-    dispatch(editRecipeAsync(payload));
+    console.log(data);
+    // const payload = { ...data, recipe_id: rid };
+    // dispatch(editRecipeAsync(payload));
   };
   const handleBackClick = () => {
     history.push('/profile/recipes');
@@ -55,6 +56,7 @@ const EditRecipe = () => {
     }
   }, [rid, recipes, setValue]);
 
+  const test = [1, 2, 3];
   return (
     <Box
       sx={{
@@ -99,6 +101,19 @@ const EditRecipe = () => {
           margin="normal"
           {...register('cooking_time')}
         />
+        {
+          test.map((value) => (
+            <Input
+              key={value}
+              required
+              label="Ingredient"
+              type="number"
+              endAdornment={<InputAdornment position="end">min</InputAdornment>}
+              margin="normal"
+              {...register(`ingredient${value}`)}
+            />
+          ))
+        }
         <Button
           type="submit"
           variant="contained"

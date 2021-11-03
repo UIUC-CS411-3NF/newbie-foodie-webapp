@@ -4,7 +4,7 @@ import {
 } from './authAPI';
 
 const initialState = {
-  login: null,
+  login: true,
   status: 'idle',
   connect: false,
   email: null,

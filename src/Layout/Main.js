@@ -7,12 +7,16 @@ import SignUp from '../User/SignUp';
 import Homepage from '../Homepage/Homepage';
 import Profile from '../User/Profile';
 import { verifyAsync } from '../features/auth/authSlice';
+import { getIngredientsAsync } from '../features/recipe/recipeSlice';
 
 const Main = () => {
   const auth = useSelector((state) => state.auth);
+  const recipe = useSelector((state) => state.recipe);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(verifyAsync());
+    dispatch(getIngredientsAsync());
   }, []);
   let routes;
   if (auth.login) {

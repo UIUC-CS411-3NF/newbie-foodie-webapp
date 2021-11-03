@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import RecipeCard from '../Recipe/RecipeCard';
 import { getUserRecipesAsync, resetStatus } from '../features/recipe/recipeSlice';
 
@@ -14,7 +15,9 @@ const UserRecipes = () => {
   const recipe = useSelector((state) => state.recipe);
   const auth = useSelector((state) => state.auth);
   useEffect(() => {
-    dispatch(getUserRecipesAsync(auth.user_id));
+    if (auth.user_id) {
+      dispatch(getUserRecipesAsync(auth.user_id));
+    }
   }, [auth.user_id]);
 
   useEffect(() => {
@@ -26,7 +29,7 @@ const UserRecipes = () => {
       dispatch(getUserRecipesAsync(auth.user_id));
     }
   }, [recipe.isNeedToReSearch]);
-
+  console.log(recipe.recipes);
   const ShowAvatar = false;
   return (
 
