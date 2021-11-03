@@ -14,7 +14,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import apiStatus from '../features/apiStatus';
-import { createRecipeAsync, editRecipeAsync } from '../features/recipe/recipeSlice';
 
 const EditRecipe = () => {
   const history = useHistory();
@@ -56,7 +55,6 @@ const EditRecipe = () => {
     }
   }, [rid, recipes, setValue]);
 
-  const test = [1, 2, 3];
   return (
     <Box
       sx={{
@@ -101,19 +99,15 @@ const EditRecipe = () => {
           margin="normal"
           {...register('cooking_time')}
         />
-        {
-          test.map((value) => (
-            <Input
-              key={value}
-              required
-              label="Ingredient"
-              type="number"
-              endAdornment={<InputAdornment position="end">min</InputAdornment>}
-              margin="normal"
-              {...register(`ingredient${value}`)}
-            />
-          ))
-        }
+        <Input
+          required
+          label="Ingredient"
+          type="number"
+          endAdornment={<InputAdornment position="end">min</InputAdornment>}
+          margin="normal"
+          {...register(`ingredient${value}`)}
+        />
+
         <Button
           type="submit"
           variant="contained"

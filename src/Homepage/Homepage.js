@@ -13,9 +13,9 @@ const Homepage = () => (
         backgroundSize: 'cover',
       }}
     >
-    < Searchbox/>
+      <Searchbox />
     </div>
-    
+
     <h1>Homepage</h1>
   </div>
 );
