@@ -99,15 +99,6 @@ const EditRecipe = () => {
           margin="normal"
           {...register('cooking_time')}
         />
-        <Input
-          required
-          label="Ingredient"
-          type="number"
-          endAdornment={<InputAdornment position="end">min</InputAdornment>}
-          margin="normal"
-          {...register(`ingredient${value}`)}
-        />
-
         <Button
           type="submit"
           variant="contained"
