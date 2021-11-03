@@ -7,33 +7,32 @@ import { SearchOutlined } from '@mui/icons-material';
 import { Box } from '@mui/system';
 
 const Searchbox = () => (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignContent: 'center',
+    }}
+  >
+    <Box
+      sx={{
+        borderRadius: 8,
+        border: '1px solid grey',
+        width: 360,
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignContent: 'center'
       }}
     >
-      <Box
-        sx={{
-          borderRadius: 8,
-          border: '1px solid grey',
-          width: 360,
-          display: 'flex',
-        }}
-      >
-        <InputBase
-          sx={{ml: 1, flex: 1, }}
-          placeholder="Search what you like to eat today!"
-        />
-        <IconButton type="submit" sx={{ p: '10px', }}>
-          <SearchOutlined />
-        </IconButton>
-      </Box>
-    </div>
-  );      
-  export default Searchbox;
-  
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search what you like to eat today!"
+      />
+      <IconButton type="submit" sx={{ p: '10px' }}>
+        <SearchOutlined />
+      </IconButton>
+    </Box>
+  </div>
+);
+export default Searchbox;
