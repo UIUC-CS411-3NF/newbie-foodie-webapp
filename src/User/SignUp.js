@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { signUpAsync } from '../features/auth/authSlice';
+import Background from '../resources/images/signup.jpg';
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -39,7 +40,7 @@ export default function SignUp() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${Background})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
             backgroundSize: 'cover',

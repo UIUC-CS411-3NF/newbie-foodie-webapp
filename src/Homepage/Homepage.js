@@ -1,6 +1,7 @@
 import { Height, Home } from '@mui/icons-material';
 import React from 'react';
 import Background from '../resources/images/brooke-lark-wMzx2nBdeng-unsplash.jpg';
+import Searchbox from './Searchbox';
 
 const Homepage = () => (
   <div>
@@ -11,7 +12,10 @@ const Homepage = () => (
         height: 600,
         backgroundSize: 'cover',
       }}
-    />
+    >
+    < Searchbox/>
+    </div>
+    
     <h1>Homepage</h1>
   </div>
 );
