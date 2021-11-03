@@ -4,6 +4,7 @@ import {
   deleteRecipe,
   editRecipe,
   getRecipeByAuthor,
+  getIngredients,
 } from './recipeAPI';
 import apiStatus from '../apiStatus';
 
@@ -68,6 +69,19 @@ export const getUserRecipesAsync = createAsyncThunk(
   },
 );
 
+export const getIngredientsAsync = createAsyncThunk(
+  'recipe/ingredient',
+  async (thunkAPI) => {
+    let response;
+    try {
+      response = await getIngredients();
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
 export const recipeSlice = createSlice({
   name: 'recipe',
   initialState,
@@ -115,6 +129,16 @@ export const recipeSlice = createSlice({
         state.isNeedToReSearch = true;
       })
       .addCase(deleteRecipeAsync.rejected, (state) => {
+        state.status = apiStatus.failed;
+      })
+      .addCase(getIngredientsAsync.pending, (state) => {
+        state.status = apiStatus.pending;
+      })
+      .addCase(getIngredientsAsync.fulfilled, (state, action) => {
+        state.status = apiStatus.successful;
+        state.ingredients = action.payload;
+      })
+      .addCase(getIngredientsAsync.rejected, (state) => {
         state.status = apiStatus.failed;
       });
   },
