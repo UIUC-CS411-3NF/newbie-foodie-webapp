@@ -6,6 +6,8 @@ import {
   getRecipeByAuthor,
   getIngredients,
   getRecipeByDishName,
+  getRecipeByAdvSQLOne,
+  getRecipeByAdvSQLTwo,
 } from './recipeAPI';
 import apiStatus from '../apiStatus';
 
@@ -97,6 +99,35 @@ export const getDishNameRecipesAsync = createAsyncThunk(
   },
 );
 
+export const getAdvSQLOneRecipesAsync = createAsyncThunk(
+  'advsql1',
+  async (data, thunkAPI) => {
+    const { cooking_time, ingredient_amount } = data;
+    console.log('query', cooking_time, ingredient_amount);
+    let response;
+    try {
+      response = await getRecipeByAdvSQLOne(cooking_time, ingredient_amount);
+      console.log(response.data);
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
+export const getAdvSQLTwoRecipesAsync = createAsyncThunk(
+  'advsql2',
+  async (rate, thunkAPI) => {
+    let response;
+    try {
+      response = await getRecipeByAdvSQLTwo(rate);
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
 export const recipeSlice = createSlice({
   name: 'recipe',
   initialState,
@@ -165,6 +196,32 @@ export const recipeSlice = createSlice({
       })
       .addCase(getDishNameRecipesAsync.rejected, (state) => {
         state.status = apiStatus.failed;
+      })
+      .addCase(getAdvSQLOneRecipesAsync.pending, (state) => {
+        state.status = apiStatus.pending;
+        console.log(state.status);
+      })
+      .addCase(getAdvSQLOneRecipesAsync.fulfilled, (state, action) => {
+        state.status = apiStatus.idle;
+        state.allRecipes = action.payload;
+        console.log(state.allRecipes);
+      })
+      .addCase(getAdvSQLOneRecipesAsync.rejected, (state) => {
+        state.status = apiStatus.failed;
+        console.log(state.status);
+      })
+      .addCase(getAdvSQLTwoRecipesAsync.pending, (state) => {
+        state.status = apiStatus.pending;
+        console.log(state.status);
+      })
+      .addCase(getAdvSQLTwoRecipesAsync.fulfilled, (state, action) => {
+        state.status = apiStatus.idle;
+        state.allRecipes = action.payload;
+        console.log(state.allRecipes);
+      })
+      .addCase(getAdvSQLTwoRecipesAsync.rejected, (state) => {
+        state.status = apiStatus.failed;
+        console.log(state.status);
       });
   },
 });

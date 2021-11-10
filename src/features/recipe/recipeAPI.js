@@ -7,3 +7,5 @@ export const editRecipe = async (recipe_id, payload) => axios.post(`/recipe/${re
 export const deleteRecipe = async (recipe_id, payload) => axios.delete(`/recipe/${recipe_id}/delete`);
 export const getIngredients = async () => axios.get('/ingredient');
 export const getRecipeByDishName = async (dish_name) => axios.get(`/recipe${dish_name.length === 0 ? '' : `?dish_name=${dish_name}`}`);
+export const getRecipeByAdvSQLOne = async (cooking_time, ingredient_amount) => axios.get(`/advsql/1?cooking_time=${cooking_time}&ingredient_amount=${ingredient_amount}`);
+export const getRecipeByAdvSQLTwo = async (rate) => axios.get(`/advsql/2?rate=${rate}`);
