@@ -6,6 +6,7 @@ import Background from '../resources/images/brooke-lark-wMzx2nBdeng-unsplash.jpg
 import Searchbox from './Searchbox';
 import RecipeCard from '../Recipe/RecipeCard';
 import { getDishNameRecipesAsync, resetStatus } from '../features/recipe/recipeSlice';
+import AdvanceSearchPopper from './AdvanceSearchPopper';
 
 const Homepage = () => {
   const recipe = useSelector((state) => state.recipe);
@@ -25,6 +26,7 @@ const Homepage = () => {
         }}
       >
         <Searchbox />
+        <AdvanceSearchPopper />
       </div>
       <Box
         sx={{
