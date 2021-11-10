@@ -24,6 +24,7 @@ export const signInAsync = createAsyncThunk(
     let response;
     try {
       response = await signIn(payload);
+      thunkAPI.dispatch(verifyAsync());
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
@@ -39,6 +40,7 @@ export const signUpAsync = createAsyncThunk(
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
+
     return response.data;
   },
 );

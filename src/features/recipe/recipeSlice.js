@@ -40,7 +40,7 @@ export const editRecipeAsync = createAsyncThunk(
     const { recipe_id, ...others } = payload;
     let response;
     try {
-      response = await editRecipe(recipe_id, payload);
+      response = await editRecipe(recipe_id, others);
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
