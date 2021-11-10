@@ -8,30 +8,65 @@ import {
   Backdrop,
   CircularProgress,
   Alert,
+  IconButton,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import apiStatus from '../features/apiStatus';
+import { editRecipeAsync } from '../features/recipe/recipeSlice';
 
 const EditRecipe = () => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [failed, setFailed] = useState(false);
-  const { recipes, status } = useSelector((state) => state.recipe);
+  const [myIngredients, setIngredients] = useState([]);
+  const { ingredients, recipes, status } = useSelector((state) => state.recipe);
   const {
-    register, handleSubmit, setValue, formState: { errors },
+    control, register, handleSubmit, setValue, formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
   const { rid } = useParams();
   const onSubmit = (data) => {
-    console.log(data);
-    // const payload = { ...data, recipe_id: rid };
-    // dispatch(editRecipeAsync(payload));
+    const {
+      dish_name, description, cooking_time, ...other
+    } = data;
+    const ingredients = [];
+    for (let i = 0; i < myIngredients.length; i++) {
+      const ingredient = {};
+      ingredient.ingredient_id = other[`ingredient${i}`];
+      ingredient.amount = other[`ingredient_amount_${i}`];
+      ingredients.push(ingredient);
+    }
+    dispatch(editRecipeAsync({
+      dish_name,
+      description,
+      cooking_time,
+      ingredients,
+      recipe_id: rid,
+    }));
   };
   const handleBackClick = () => {
     history.push('/profile/recipes');
+  };
+
+  const handleOnAddIngredientClick = () => {
+    setIngredients((prev) => {
+      const newIngredient = prev.map((item) => item);
+      newIngredient.push(prev.length);
+      return newIngredient;
+    });
+  };
+  const handleOnDeleteIngredientClick = () => {
+    setIngredients((prev) => {
+      const newIngredient = prev.filter((item) => item !== prev.length - 1);
+      return newIngredient;
+    });
   };
 
   useEffect(() => {
@@ -52,6 +87,11 @@ const EditRecipe = () => {
       setValue('dish_name', recipe.dish_name);
       setValue('description', recipe.description);
       setValue('cooking_time', recipe.cooking_time);
+      recipe.ingredients.forEach((ingredient, index) => {
+        setValue(`ingredient${index}`, ingredient.ingredient_id);
+        setValue(`ingredient_amount_${index}`, ingredient.amount);
+      });
+      setIngredients(recipe.ingredients.map((item, index) => index));
     }
   }, [rid, recipes, setValue]);
 
@@ -75,30 +115,127 @@ const EditRecipe = () => {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField
-          required
-          label="Dish Name"
-          placeholder="Pizza"
-          margin="normal"
-          {...register('dish_name')}
+        <Controller
+          name="dish_name"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Dish Name"
+              placeholder="Pizza"
+              margin="normal"
+            />
+          )}
         />
-        <TextField
-          required
-          label="Description"
-          multiline
-          minRows={4}
-          maxRows={12}
-          margin="normal"
-          {...register('description')}
+        <Controller
+          name="description"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Description"
+              margin="normal"
+              multiline
+              minRows={4}
+              maxRows={12}
+            />
+          )}
         />
-        <Input
-          required
-          label="Cooking Time"
-          type="number"
-          endAdornment={<InputAdornment position="end">min</InputAdornment>}
-          margin="normal"
-          {...register('cooking_time')}
+        <Controller
+          name="cooking_time"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Input
+              {...field}
+              required
+              label="Cooking Time"
+              type="number"
+              endAdornment={<InputAdornment position="end">Min</InputAdornment>}
+              startAdornment={<InputAdornment position="start">Cooking Time</InputAdornment>}
+              margin="normal"
+            />
+          )}
         />
+        <Box
+          sx={{
+            mt: 2,
+            mb: 4,
+            ml: 2,
+            mr: 2,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Typography variant="subtitle1">
+              Add and Select Your Ingredients
+            </Typography>
+            <IconButton
+              onClick={
+                handleOnAddIngredientClick
+              }
+              color="primary"
+            >
+              <AddCircleOutlineIcon />
+            </IconButton>
+            <IconButton
+              onClick={
+                handleOnDeleteIngredientClick
+              }
+              color="error"
+            >
+              <RemoveCircleOutlineIcon />
+            </IconButton>
+          </div>
+          <>
+            {
+            myIngredients.map((item) => (
+              <div
+                key={item}
+              >
+
+                <Controller
+                  name={`ingredient${item}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      sx={{
+                        minWidth: 120,
+                        mr: 3,
+                      }}
+                    >
+                      {
+                    ingredients && ingredients.map((ingredient) => (
+                      <MenuItem
+                        value={`${ingredient.ingredient_id}`}
+                        key={ingredient.ingredient_id}
+                      >
+                        {ingredient.name}
+                      </MenuItem>
+                    ))
+                  }
+                    </Select>
+                  )}
+                />
+                <Input
+                  required
+                  type="number"
+                  placeholder={3}
+                  {...register(`ingredient_amount_${item}`)}
+                />
+              </div>
+            ))
+          }
+          </>
+        </Box>
         <Button
           type="submit"
           variant="contained"

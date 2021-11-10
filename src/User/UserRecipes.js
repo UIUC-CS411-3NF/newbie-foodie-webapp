@@ -14,6 +14,7 @@ const UserRecipes = () => {
   };
   const recipe = useSelector((state) => state.recipe);
   const auth = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (auth.user_id) {
       dispatch(getUserRecipesAsync(auth.user_id));
@@ -29,7 +30,6 @@ const UserRecipes = () => {
       dispatch(getUserRecipesAsync(auth.user_id));
     }
   }, [recipe.isNeedToReSearch]);
-  console.log(recipe.recipes);
   const ShowAvatar = false;
   return (
 

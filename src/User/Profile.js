@@ -2,6 +2,7 @@ import {
   Avatar, Box, Button, Tab, Tabs,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, Switch, Route } from 'react-router-dom';
 import CreateRecipe from '../Recipe/CreateRecipe';
 import EditRecipe from '../Recipe/EditRecipe';
@@ -9,6 +10,7 @@ import UserRecipes from './UserRecipes';
 
 const Profile = () => {
   const history = useHistory();
+  const auth = useSelector((state) => state.auth);
   const handleCreateClick = () => {
     history.push('/profile/recipe/create');
   };
@@ -54,9 +56,9 @@ const Profile = () => {
               fontSize: 45,
             }}
           >
-            F
+            {auth.username && auth.username[0]}
           </Avatar>
-          <h1>username</h1>
+          <h1>{auth.username}</h1>
         </Box>
         <Box
           sx={{

@@ -2,7 +2,15 @@ import {
   Alert,
   Backdrop,
   Box,
-  Button, CircularProgress, IconButton, Input, InputAdornment, MenuItem, Select, TextField, Typography,
+  Button,
+  CircularProgress,
+  IconButton,
+  Input,
+  InputAdornment,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,7 +40,6 @@ const CreateRecipe = () => {
       ingredient.amount = other[`ingredient_amount_${i}`];
       ingredients.push(ingredient);
     }
-    console.log(ingredients);
     dispatch(createRecipeAsync({
       dish_name,
       description,
@@ -43,7 +50,6 @@ const CreateRecipe = () => {
   const handleBackClick = () => {
     history.push('/profile/recipes');
   };
-  console.log(ingredients);
   const handleOnAddIngredientClick = () => {
     setIngredients((prev) => {
       const newIngredient = prev.map((item) => item);
