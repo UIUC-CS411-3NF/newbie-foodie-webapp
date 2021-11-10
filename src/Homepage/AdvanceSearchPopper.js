@@ -82,7 +82,7 @@ function AdvanceSearchPopper() {
 
 
   const togglePopup = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
   };
 
   return (

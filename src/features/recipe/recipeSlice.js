@@ -103,11 +103,9 @@ export const getAdvSQLOneRecipesAsync = createAsyncThunk(
   'advsql1',
   async (data, thunkAPI) => {
     const { cooking_time, ingredient_amount } = data;
-    console.log('query', cooking_time, ingredient_amount);
     let response;
     try {
       response = await getRecipeByAdvSQLOne(cooking_time, ingredient_amount);
-      console.log(response.data);
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
@@ -199,29 +197,23 @@ export const recipeSlice = createSlice({
       })
       .addCase(getAdvSQLOneRecipesAsync.pending, (state) => {
         state.status = apiStatus.pending;
-        console.log(state.status);
       })
       .addCase(getAdvSQLOneRecipesAsync.fulfilled, (state, action) => {
         state.status = apiStatus.idle;
         state.allRecipes = action.payload;
-        console.log(state.allRecipes);
       })
       .addCase(getAdvSQLOneRecipesAsync.rejected, (state) => {
         state.status = apiStatus.failed;
-        console.log(state.status);
       })
       .addCase(getAdvSQLTwoRecipesAsync.pending, (state) => {
         state.status = apiStatus.pending;
-        console.log(state.status);
       })
       .addCase(getAdvSQLTwoRecipesAsync.fulfilled, (state, action) => {
         state.status = apiStatus.idle;
         state.allRecipes = action.payload;
-        console.log(state.allRecipes);
       })
       .addCase(getAdvSQLTwoRecipesAsync.rejected, (state) => {
         state.status = apiStatus.failed;
-        console.log(state.status);
       });
   },
 });
