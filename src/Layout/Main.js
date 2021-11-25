@@ -8,6 +8,7 @@ import Homepage from '../Homepage/Homepage';
 import Profile from '../User/Profile';
 import { verifyAsync } from '../features/auth/authSlice';
 import { getIngredientsAsync } from '../features/recipe/recipeSlice';
+import RecipeDetail from '../Recipe/RecipeDetail';
 
 const Main = () => {
   const auth = useSelector((state) => state.auth);
@@ -25,6 +26,9 @@ const Main = () => {
         <Route path="/profile">
           <Profile />
         </Route>
+        <Route path="/recipe/:rid" exact>
+          <RecipeDetail />
+        </Route>
         <Route path="/" exact>
           <Homepage />
         </Route>
@@ -39,6 +43,9 @@ const Main = () => {
         </Route>
         <Route path="/signup" exact>
           <SignUp />
+        </Route>
+        <Route path="/recipe/:rid" exact>
+          <RecipeDetail />
         </Route>
         <Route path="/">
           <Homepage />

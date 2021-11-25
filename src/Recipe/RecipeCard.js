@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -29,6 +29,10 @@ const RecipeCard = ({
   };
   const handleOnDeleteClick = (rid) => {
     dispatch(deleteRecipeAsync(rid));
+  };
+  const handleOnLearnMoreClick = (rid) => {
+    console.log(rid);
+    history.push(`/recipe/${rid}`);
   };
 
   return (
@@ -80,30 +84,39 @@ const RecipeCard = ({
           recipe.description
         }
         </Typography>
+
       </CardContent>
-      {allowedEdited && user_id == recipe.author_id
+      <CardActions
+        disableSpacing
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+        }}
+      >
+        {allowedEdited && user_id == recipe.author_id
     && (
-    <CardActions
-      disableSpacing
-      sx={{
-        display: 'flex',
-        flexDirection: 'row-reverse',
-      }}
-    >
-      <IconButton
-        onClick={() => handleOnDeleteClick(recipe.recipe_id)}
-        aria-label="delete"
-      >
-        <DeleteIcon />
-      </IconButton>
-      <IconButton
-        onClick={() => handleOnEditClick(recipe.recipe_id)}
-        aria-label="edit"
-      >
-        <EditIcon />
-      </IconButton>
-    </CardActions>
+      <div>
+        <IconButton
+          onClick={() => handleOnDeleteClick(recipe.recipe_id)}
+          aria-label="delete"
+        >
+          <DeleteIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => handleOnEditClick(recipe.recipe_id)}
+          aria-label="edit"
+        >
+          <EditIcon />
+        </IconButton>
+      </div>
     )}
+        <Button
+          onClick={() => handleOnLearnMoreClick(recipe.recipe_id)}
+          size="small"
+        >
+          Learn More
+        </Button>
+      </CardActions>
     </Card>
   );
 };
