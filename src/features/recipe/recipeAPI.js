@@ -9,3 +9,6 @@ export const getIngredients = async () => axios.get('/ingredient');
 export const getRecipeByDishName = async (dish_name) => axios.get(`/recipe${dish_name.length === 0 ? '' : `?dish_name=${dish_name}`}`);
 export const getRecipeByAdvSQLOne = async (cooking_time, ingredient_amount) => axios.get(`/advsql/1?cooking_time=${cooking_time}&ingredient_amount=${ingredient_amount}`);
 export const getRecipeByAdvSQLTwo = async (rate) => axios.get(`/advsql/2?rate=${rate}`);
+export const getRecipeById = async (rid) => axios.get(`/recipe/${rid}`);
+export const postReview = async (payload) => axios.post('/review/post', payload);
+export const deleteReview = async (rid) => axios.delete(`/review/${rid}/delete`);

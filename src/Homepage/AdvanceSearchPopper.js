@@ -53,8 +53,6 @@ function AdvanceSearchPopper() {
     }
     setIsOpen(!isOpen);
   };
-
-  console.log(ingredients);
   const handleOnAddIngredientClick = () => {
     setIngredients((prev) => {
       const newIngredient = prev.map((item) => item);
