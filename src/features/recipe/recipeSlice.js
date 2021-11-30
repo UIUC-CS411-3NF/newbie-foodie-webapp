@@ -6,6 +6,8 @@ import {
   getRecipeByAuthor,
   getIngredients,
   getRecipeByDishName,
+  getRecipeOfTop3FoodType,
+  getTopActiveMember,
   getRecipeByAdvSQLOne,
   getRecipeByAdvSQLTwo,
 } from './recipeAPI';
@@ -14,6 +16,8 @@ import apiStatus from '../apiStatus';
 const initialState = {
   recipes: null, // for a specific user
   allRecipes: null,
+  top3FoodType: null,
+  topActiveMember: null,
   status: apiStatus.idle,
   isNeedToReSearch: false,
 };
@@ -92,6 +96,32 @@ export const getDishNameRecipesAsync = createAsyncThunk(
     let response;
     try {
       response = await getRecipeByDishName(dish_name);
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
+export const getTop3FoodTypeRecipesAsync = createAsyncThunk(
+  'recipe/top3FoodType',
+  async (thunkAPI) => {
+    let response;
+    try {
+      response = await getRecipeOfTop3FoodType();
+    } catch (err) {
+      throw thunkAPI.rejectWithValue();
+    }
+    return response.data;
+  },
+);
+
+export const getTopActiveMemberAsync = createAsyncThunk(
+  'recipe/topActiveMember',
+  async (thunkAPI) => {
+    let response;
+    try {
+      response = await getTopActiveMember();
     } catch (err) {
       throw thunkAPI.rejectWithValue();
     }
@@ -193,6 +223,26 @@ export const recipeSlice = createSlice({
         state.allRecipes = action.payload;
       })
       .addCase(getDishNameRecipesAsync.rejected, (state) => {
+        state.status = apiStatus.failed;
+      })
+      .addCase(getTop3FoodTypeRecipesAsync.pending, (state) => {
+        state.status = apiStatus.pending;
+      })
+      .addCase(getTop3FoodTypeRecipesAsync.fulfilled, (state, action) => {
+        state.status = apiStatus.idle;
+        state.top3FoodType = action.payload;
+      })
+      .addCase(getTop3FoodTypeRecipesAsync.rejected, (state) => {
+        state.status = apiStatus.failed;
+      })
+      .addCase(getTopActiveMemberAsync.pending, (state) => {
+        state.status = apiStatus.pending;
+      })
+      .addCase(getTopActiveMemberAsync.fulfilled, (state, action) => {
+        state.status = apiStatus.idle;
+        state.topActiveMember = action.payload;
+      })
+      .addCase(getTopActiveMemberAsync.rejected, (state) => {
         state.status = apiStatus.failed;
       })
       .addCase(getAdvSQLOneRecipesAsync.pending, (state) => {

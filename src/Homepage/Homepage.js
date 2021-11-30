@@ -5,11 +5,14 @@ import { Box } from '@mui/material';
 import Background from '../resources/images/brooke-lark-wMzx2nBdeng-unsplash.jpg';
 import Searchbox from './Searchbox';
 import RecipeCard from '../Recipe/RecipeCard';
-import { getDishNameRecipesAsync, resetStatus } from '../features/recipe/recipeSlice';
+import { getDishNameRecipesAsync, getTop3FoodTypeRecipesAsync, resetStatus } from '../features/recipe/recipeSlice';
 import AdvanceSearchPopper from './AdvanceSearchPopper';
+import BadgeAvatars from './TopActiveMembers';
+import Top3FoodType from './Top3FoodType';
 
 const Homepage = () => {
   const recipe = useSelector((state) => state.recipe);
+  console.log(recipe);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDishNameRecipesAsync(''));
@@ -28,6 +31,8 @@ const Homepage = () => {
         <Searchbox />
         <AdvanceSearchPopper />
       </div>
+      <BadgeAvatars />
+      <Top3FoodType />
       <Box
         sx={{
           display: 'flex',
