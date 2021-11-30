@@ -94,6 +94,15 @@ function AdvanceSearchPopper() {
     >
       <input
         type="button"
+        style={{
+          border: 'none',
+          backgroundColor: '#1776D2',
+          color: 'white',
+          padding: '16px 32px',
+          margin: '4px 2px',
+          cursor: 'pointer',
+          borderRadius: '8',
+        }}
         value="Advanced Search"
         onClick={togglePopup}
       />
