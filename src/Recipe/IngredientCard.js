@@ -9,7 +9,7 @@ const IngredientCard = ({
     <Typography
       variant="h6"
     >
-      {`${ingredient.name}   ${ingredient.amount}`}
+      {`${ingredient.name}:   ${ingredient.amount}`}
     </Typography>
   </Box>
 );
