@@ -12,7 +12,6 @@ import Top3FoodType from './Top3FoodType';
 
 const Homepage = () => {
   const recipe = useSelector((state) => state.recipe);
-  console.log(recipe);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDishNameRecipesAsync(''));

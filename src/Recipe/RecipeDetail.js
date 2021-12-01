@@ -117,7 +117,7 @@ const RecipeDetail = () => {
             </Typography>
           </Box>
           <Box>
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+            <Rating name="half-rating-read" value={recipe.weightedRate} precision={0.1} readOnly />
           </Box>
           <Box>
             <Box>
