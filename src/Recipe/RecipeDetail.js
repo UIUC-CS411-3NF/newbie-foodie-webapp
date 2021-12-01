@@ -29,6 +29,8 @@ const RecipeDetail = () => {
         const response = await postReview(payload);
         const p = await getRecipeById(rid);
         const recipe = p.data;
+        console.log(recipe);
+
         setRecipe(recipe);
         setPostError(false);
         reset();
@@ -47,6 +49,7 @@ const RecipeDetail = () => {
         const p = await getRecipeById(rid);
         const recipe = p.data;
         setRecipe(recipe);
+        console.log(recipe);
       } catch (err) {
         console.log(err);
       }
@@ -70,6 +73,8 @@ const RecipeDetail = () => {
         await deleteReview(review.user_review_recipe_id);
         const p = await getRecipeById(rid);
         const recipe = p.data;
+        console.log(recipe);
+
         setRecipe(recipe);
       } catch (err) {
         console.log(err);
@@ -117,7 +122,7 @@ const RecipeDetail = () => {
             </Typography>
           </Box>
           <Box>
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+            <Rating name="half-rating-read" value={recipe.weightedRate} precision={0.1} readOnly />
           </Box>
           <Box>
             <Box>
