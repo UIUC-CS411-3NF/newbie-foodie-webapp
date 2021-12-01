@@ -33,41 +33,8 @@ const BadgeAvatars = () => {
     >
     <h1>Top Active Members</h1>
     <Stack component="div"  direction="row" spacing={2}>
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={
-          <Avatar
-          sx={{ width: 22,
-          height: 22,
-          border: `2px solid`}} 
-          >1</Avatar>
-        }
-        >
-          <Avatar 
-            {...stringAvatar('Ajie Cjile')}
-            sx={{ width: 56, height: 56 }} 
-          />
-        </Badge>
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={
-          <Avatar
-          sx={{ width: 22,
-          height: 22,
-          border: `2px solid`}} 
-          >1</Avatar>
-        }
-        >
-          <Avatar 
-            {...stringAvatar('Ajie Cjile')}
-            sx={{ width: 56, height: 56 }} 
-          />
-        </Badge>
-
-        {/* {
-          recipe.topActiveMember && recipe.topActiveMember.map((item) => (
+        {
+          recipe.topActiveMember && recipe.topActiveMember.map((item, index) => (
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -75,17 +42,23 @@ const BadgeAvatars = () => {
               <Avatar
               sx={{ width: 22,
               height: 22,
-              border: `2px solid`}} 
-              >1</Avatar>
+              border: `2px solid`}}
+              style={{
+                backgroundColor: '#1776D2',
+              }} 
+              >{index+1}</Avatar>
+              
             }
             >
               <Avatar 
-                {...stringAvatar({item.user_name})}
                 sx={{ width: 56, height: 56 }} 
-              />
+                style={{
+                  backgroundColor: '#1776D2',
+                }} 
+              >{item.username}</Avatar>
             </Badge>
           ))
-        } */}
+        }
     </Stack>
     </div>
   );

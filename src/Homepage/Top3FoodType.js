@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
 import { getTop3FoodTypeRecipesAsync } from '../features/recipe/recipeSlice';
 import Stack from '@mui/material/Stack';
+import { display } from '@mui/system';
 
 const Top3FoodType = () => {
   const dispatch = useDispatch();
@@ -23,48 +24,46 @@ const Top3FoodType = () => {
       }}
     >
     <h1>Top 3 Food Types</h1>
-    <Stack component="div"  direction="row" spacing={2}>
-      {/* {
+    <Stack
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }} 
+      component="div"  direction="row" spacing={2}>
+      {
         recipe.top3FoodType && recipe.top3FoodType.map((item) => (
-          <h2>{item.foodtype_name}, {item.count}</h2>
+          <div
+            style={{
+              paddingLeft: '32px',
+              paddingRight: '32px',
+              background: '#1776D2',
+              border: 0,
+              borderRadius: 3,
+              boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+              color: 'white',
+              display: 'flex',
+              flexDirection: 'column',
+            }}  
+          >
+            <div
+              style={{
+                background: '#1776D2',
+                border: 0,
+                borderRadius: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignContent: 'center',
+              }}  
+            > {item.name} </div>
+            <div> {item.numRecipe} recipes </div>
+          </div>
         ))
-      } */}
-      <div
-      style={{
-        width: '30%',
-        height: '50%',
-        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-        color: 'white',
-      }}
-      >Chicken
-      </div>
-      <div
-      style={{
-        width: '30%',
-        height: '50%',
-        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-        color: 'white',
-      }}
-      >Chicken
-      </div>
-      <div
-      style={{
-        width: '30%',
-        height: '50%',
-        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-        color: 'white',
-      }}
-      >Chicken
-      </div>
+      }
       </Stack>
     </div>
   );
